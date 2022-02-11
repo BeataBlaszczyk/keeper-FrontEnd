@@ -1,23 +1,42 @@
-import logo from './logo.svg';
+import {useState, useEffect} from "react";
 import './App.css';
+import Axios from "axios";
 
 function App() {
+  const [listOfUsers, setListOfUsers] = useState([])
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+
+ 
+
+useEffect(() => {
+  Axios.get("http://localhost:3001/getUsers").then((response) => {
+    setListOfUsers(response.data)
+  })
+},[])
+
+
+const createUser = ()=> {
+  Axios.post("http://localhost:3001/createUser", {name: name, email: email}).then((response)=>{
+    setListOfUsers([...listOfUsers], {name: name, email: email})
+  } )
+}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App">    
+     <div className='usersDisplay'> 
+     {listOfUsers.map((user) => {
+       return(
+         <div>
+        <h1>Name: {user.name}</h1>
+        <h1>email: {user.email}</h1>
+        
+         </div>
+       )
+     })}
+     </div>
+     <input type="text" placeholder="name..." onChange={(event)=> {setName(event.target.value)} }/> 
+     <input type="text" placeholder="email..." onChange={(event)=> {setEmail(event.target.value)}} /> 
+     <button onClick={createUser}> Create user </button>
     </div>
   );
 }
