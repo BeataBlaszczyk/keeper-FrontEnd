@@ -75,7 +75,7 @@ footer p {
     
   }
   #last{
-    content: "";
+    display:none;
     flex-grow: 0 !important;
     
   }
