@@ -61,7 +61,7 @@ footer p {
   display: inline-flex;
   flex-wrap: wrap;
  align-items: center;
- 
+ width: 100%;
 }
 
 #growingItem{
