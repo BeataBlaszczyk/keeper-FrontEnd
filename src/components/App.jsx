@@ -5,7 +5,7 @@ import Note from "./Note";
 import myNotes from "./notes"
 import CreateArea from "./CreateArea";
 import Axios from "axios";
-import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+//import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 
 function App() {
   const [notes, setNotes] = useState([]);
