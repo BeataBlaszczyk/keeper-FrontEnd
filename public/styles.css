@@ -71,7 +71,7 @@ footer p {
 @media only screen and (max-width: 575px) { 
   .note {
     
-    width: 45%;
+    width: 100%;
     
   }
   #last{
