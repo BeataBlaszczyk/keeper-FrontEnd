@@ -74,6 +74,11 @@ footer p {
     width: 45%;
     
   }
+  #last{
+    content: "";
+    flex-grow: 0 !important;
+    
+  }
 }
 
 .note h1 {
