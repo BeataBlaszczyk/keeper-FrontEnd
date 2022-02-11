@@ -20,7 +20,7 @@ function App() {
 
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/getNotes").then((response) => {
+    Axios.get("https://keeper-back-end.vercel.app/getNotes").then((response) => {
       setNotes(response.data)
       
     })
@@ -36,9 +36,9 @@ function App() {
 
 
   function addNote(newNote) {
-    Axios.post("http://localhost:3001/createNote", {title: newNote.title, content: newNote.content}).then((response)=>{
+    Axios.post("https://keeper-back-end.vercel.app/createNote", {title: newNote.title, content: newNote.content}).then((response)=>{
     
-      Axios.get("http://localhost:3001/getNotes").then((response) => {
+      Axios.get("https://keeper-back-end.vercel.app/getNotes").then((response) => {
         setNotes(response.data)});
   });
       
@@ -50,7 +50,7 @@ function App() {
 
     
 
- Axios.post("http://localhost:3001/deleteNote", {_id:id}).then((response)=>{
+ Axios.post("https://keeper-back-end.vercel.app/deleteNote", {_id:id}).then((response)=>{
   setNotes(prevNotes => {
     return prevNotes.filter((noteItem, index) => {
       return noteItem._id !== id;

@@ -10,14 +10,14 @@ function App() {
  
 
 useEffect(() => {
-  Axios.get("http://localhost:3001/getUsers").then((response) => {
+  Axios.get("https://keeper-back-end.vercel.app/getUsers").then((response) => {
     setListOfUsers(response.data)
   })
 },[])
 
 
 const createUser = ()=> {
-  Axios.post("http://localhost:3001/createUser", {name: name, email: email}).then((response)=>{
+  Axios.post("https://keeper-back-end.vercel.app/createUser", {name: name, email: email}).then((response)=>{
     setListOfUsers([...listOfUsers], {name: name, email: email})
   } )
 }
