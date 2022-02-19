@@ -24,7 +24,8 @@ const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" 
  useEffect(()=> {
 
   setIsLoaded(false)
-    if (currentUser){
+    
+  if (currentUser){
      
       console.log("rerender whole app" + currentUser)
       Axios.post(myAppUrl+"/login", {username: currentUser, password: ""}).then((response)=>{
@@ -39,11 +40,13 @@ const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" 
         setColor(response.data.color)
         }
         setIsLogged(true)
-        
+        setIsLoaded(true)
       });
 
+  }else{
+    setIsLoaded(true)
   }
-  setIsLoaded(true)
+  
 }, [])
 
 const [isLoaded, setIsLoaded] = useState(false)
