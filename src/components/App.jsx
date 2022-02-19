@@ -17,7 +17,7 @@ var currentUser = document.cookie.split('; ').find(row => row.startsWith('user')
 
 
 
-const myAppUrl = "http://localhost:3001" //"https://keeper-back-end.vercel.app" //
+const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" //
 
  function  App() {
  
