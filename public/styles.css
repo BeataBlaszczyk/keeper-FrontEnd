@@ -3,9 +3,11 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 html {
   font-family: "Montserrat", sans-serif;
 }
+
 body {
   background: #eee;
   background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
@@ -14,11 +16,12 @@ body {
 
 header {
   background-color: #f5ba13;
-  margin: auto -16px;
+  width: 100vw;
+  margin: 0 -16px;
   padding: 16px 32px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   display: flex;
-  
+
 }
 
 header h1 {
@@ -28,17 +31,18 @@ header h1 {
 }
 
 footer {
-  
+
   text-align: center;
   padding-bottom: 1rem;
   width: 100%;
   height: 2.5rem;
-  
+
 }
 
 footer p {
   color: #ccc;
 }
+
 .note {
   background: #fff;
   border-radius: 7px;
@@ -47,37 +51,38 @@ footer p {
   width: 240px;
   margin: 16px;
   flex-grow: 1;
-  
+
 
 }
 
-#last{
+#last {
   content: "";
   flex-grow: 110000000 !important;
-  
+
 }
 
-#notes{
+#notes {
   display: inline-flex;
   flex-wrap: wrap;
- align-items: center;
- width: 100%;
+  align-items: center;
+  width: 100%;
 }
 
-#growingItem{
+.growingItem {
   flex-grow: 1;
 }
 
-@media only screen and (max-width: 575px) { 
+@media only screen and (max-width: 575px) {
   .note {
-    
+
     width: 100%;
-    
+
   }
-  #last{
-    display:none;
+
+  #last {
+    display: none;
     flex-grow: 0 !important;
-    
+
   }
 }
 
@@ -85,6 +90,7 @@ footer p {
   font-size: 1.1em;
   margin-bottom: 6px;
 }
+
 .note p {
   font-size: 1.1em;
   margin-bottom: 10px;
@@ -115,6 +121,7 @@ form.create-note {
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
+
 form.create-note input,
 form.create-note textarea {
   width: 100%;
@@ -125,6 +132,7 @@ form.create-note textarea {
   font-family: inherit;
   resize: none;
 }
+
 form.create-note button {
   position: absolute;
   right: 18px;
@@ -141,16 +149,21 @@ form.create-note button {
 }
 
 
-#colorChoose{
+#colorChoose {
   width: 1rem;
   height: 1rem;
   border: 1px black solid;
   border-radius: 50%;
 
-  
+
+
 }
 
-#colorContainer{
+label:hover {
+  cursor: pointer;
+}
+
+#colorContainer {
   flex-grow: 1;
   text-align: right;
   margin: auto;
@@ -161,4 +174,112 @@ form.create-note button {
   flex-direction: column;
   height: 100vh;
   width: 100%;
+}
+
+.login {
+  display: inline-flex;
+  flex-direction: column;
+  margin: auto;
+  justify-content: center;
+  margin-top: 1rem;
+
+
+}
+
+.login>*,
+#paswordStyle>input {
+  padding: 5px;
+  margin: 12px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: transparent;
+  font-size: 1.1rem;
+  ;
+}
+
+.login>input,
+#paswordStyle {
+  border: none;
+  border-bottom: grey solid 1px;
+}
+
+.login>button {
+  border: grey solid 1px;
+  margin-top: 2rem;
+  ;
+}
+
+#LogSign:hover {
+  background-color: #D1D1D1;
+  cursor: pointer;
+}
+
+#LogSign:active {
+  background-color: #AAAAAA;
+}
+
+#changeOption {
+  text-decoration: underline;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+
+}
+
+#paswordStyle>input {
+
+  border: none;
+  margin: 0;
+
+}
+
+#paswordStyle {
+  display: inline-flex;
+  align-items: center;
+}
+
+input:focus {
+
+  outline: none;
+}
+
+#passVal,
+#userVal {
+  border: none;
+  font-size: 0.8rem;
+  position: absolute;
+  max-width: 245px;
+  color: red;
+}
+
+#passVal {
+  transform: translate(270px, -6.3em);
+}
+
+#userVal {
+  transform: translate(270px, -11em);
+}
+
+#userVer {
+  border: none;
+  font-size: 0.8rem;
+
+  max-width: 245px;
+  color: red;
+}
+
+button:disabled,
+button[disabled=disabled] {
+  cursor: not-allowed !important;
+}
+
+@media screen and (max-width: 810px) {
+
+  #passVal,
+  #userVal {
+    position: initial;
+    transform: translate(0, 0);
+  }
+
+
 }

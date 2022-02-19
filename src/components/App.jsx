@@ -5,85 +5,115 @@ import Note from "./Note";
 import myNotes from "./notes"
 import CreateArea from "./CreateArea";
 import Axios from "axios";
+import LoginForm from "./LoginForm";
+import Account from "./Account";
 //import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 
+const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" //"https://keeper-back-end.vercel.app";
+
 function App() {
-  const [notes, setNotes] = useState([]);
-  const [title, setName] = useState("")
-  const [content, setEmail] = useState("")
+  const [isRegistered, setIsRegister] = useState(true)
   const [color, setColor]= useState("#f5ba13");
+  const [isLogged, setIsLogged] = useState(false);
+  const [userInDatabase, setUserInDatabes]=useState(false);
+const [loginMsg, setLoginMsg] = useState("")
 
-    function changeColor(event){
-      setColor(event.target.value)
-      console.log("kolor:" + color);
-    }
+  const [user, setUser] = useState({
+    username:"",
+    password: "",
+    color: color,
+    _id: ""
+});
 
-
-  useEffect(() => {
-    Axios.get("https://keeper-back-end.vercel.app/getNotes").then((response) => {
-      setNotes(response.data)
-      
-    })
+  function changeColor(event){
+    event ? setColor(event.target.value) : setColor(color);
+    //console.log(color + "---"+ event.target.value)
+    setUser(prevUser => {
+      return {
+        ...prevUser,
+        color: color
+        
+      }})
     
-  },[])
-  
-  
-  // const addNote = ()=> {
-  //   Axios.post("http://localhost:3001/createNote", {title: title, content: content}).then((response)=>{
-  //     setNotes([...notes], {title: title, content: content})
-  //   } )
-  // }
 
-
-  function addNote(newNote) {
-    Axios.post("https://keeper-back-end.vercel.app/createNote", {title: newNote.title, content: newNote.content}).then((response)=>{
-    
-      Axios.get("https://keeper-back-end.vercel.app/getNotes").then((response) => {
-        setNotes(response.data)});
-  });
-      
-    
+    if(!isRegistered || isLogged){
+      Axios.post(myAppUrl+"/changeColor", {color: color, user: user.username}).then((response) => {
+      })
+     }
   }
 
+  function userValidation(event){
+const userName= event.target.value || "testowynieistniejacyuzytkownik"
+    Axios.get(myAppUrl+"/getUser"+ userName).then((response) => {
+      
+      setUserInDatabes(response.data)});
+    /// czy istnieje już taka nazwa uzytkownika
+    //(!errorMessage) && (!userInDatabase) && isPasswordConfirmationCorrect && props.user.username && props.user.password && setCanSubmit(true)
+} 
+      
 
-  function deleteNote(id) {
+  function handleClick(newUser, isRegistered){
+      
 
+    if (isRegistered){
+     
     
+      // sprawdzenie czy się zgadza użytkownik i hasło
+      Axios.post(myAppUrl+"/login", {username: newUser.username, password: newUser.password}).then((response)=>{
+      
+        //console.log(response.data);
 
- Axios.post("https://keeper-back-end.vercel.app/deleteNote", {_id:id}).then((response)=>{
-  setNotes(prevNotes => {
-    return prevNotes.filter((noteItem, index) => {
-      return noteItem._id !== id;
-    });
-    });
+        
+        if (typeof(response.data)=== 'string'){
+          setLoginMsg(response.data)
+        }else{
+       // setUserID(response.data.id)
+       setUser(response.data) 
+        setIsLogged(true)
+        setColor(response.data.color)
+        }
    
-    });
+      });
+      
+  
+    }else if(!isRegistered){
+     
+      Axios.post(myAppUrl + "/createUser", {username: newUser.username, password: newUser.password, color: newUser.color}).then((response)=>{
+       
+        setUser(response.data)  
+      //setUserID(response.data.id)
+      setIsLogged(true)
+          
+      
+
+        });
+    }
   }
 
-  return (
-    <div id="mainConteiner">
-      <Header currentColor={color} colorFunction={changeColor}/>
-      <CreateArea onAdd={addNote} currentColor={color} />
-      <div id="growingItem">
-      <div id="notes">
-      {notes.map((noteItem, index) => {
-        return (
-          <Note
-            key={index}
-            id={noteItem._id}
-            title={noteItem.title}
-            content={noteItem.content}
-            onDelete={deleteNote}
-            currentColor={color}
-          />
-        );
-      })}
-      <div  id="last"  > </div>
-      </div>
-      </div>
-      <Footer />
-    </div>
-  );
+  return(
+    <div id="mainConteiner" >
+      <Header setIsRegistered={setIsRegister} logOut = {setIsLogged} currentColor={color}  colorFunction={changeColor}/>
+      {isLogged ? (<Account 
+      myAppUrl={myAppUrl} 
+      currentColor={color} 
+      user={user} 
+      setUser={setUser} />) : 
+      (<LoginForm 
+      setLoginMsg={setLoginMsg}
+      isRegistered={isRegistered}
+      setIsRegister={setIsRegister}
+      loginMsg={loginMsg}
+      userInDatabase={userInDatabase} 
+      userValidation={userValidation} 
+      myAppUrl={myAppUrl} 
+      currentColor={color} 
+      user={user} 
+      setUser={setUser} 
+      loginFunc={handleClick}/>) }</div>
+    
+  )
+
+ 
 }
 
 export default App;
