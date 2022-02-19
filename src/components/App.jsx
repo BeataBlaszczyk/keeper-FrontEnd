@@ -9,7 +9,7 @@ import LoginForm from "./LoginForm";
 import Account from "./Account";
 //import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 
-const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" //"https://keeper-back-end.vercel.app";
+const myAppUrl = "http://localhost:3001" //"https://keeper-back-end.vercel.app";
 
 function App() {
   const [isRegistered, setIsRegister] = useState(true)
@@ -27,7 +27,7 @@ const [loginMsg, setLoginMsg] = useState("")
 
   function changeColor(event){
     event ? setColor(event.target.value) : setColor(color);
-    //console.log(color + "---"+ event.target.value)
+    console.log(color + "---"+ event.target.value)
     setUser(prevUser => {
       return {
         ...prevUser,
@@ -36,10 +36,7 @@ const [loginMsg, setLoginMsg] = useState("")
       }})
     
 
-    if(!isRegistered || isLogged){
-      Axios.post(myAppUrl+"/changeColor", {color: color, user: user.username}).then((response) => {
-      })
-     }
+   
   }
 
   function userValidation(event){
@@ -54,9 +51,10 @@ const userName= event.target.value || "testowynieistniejacyuzytkownik"
 
   function handleClick(newUser, isRegistered){
       
+  
 
     if (isRegistered){
-     
+      
     
       // sprawdzenie czy się zgadza użytkownik i hasło
       Axios.post(myAppUrl+"/login", {username: newUser.username, password: newUser.password}).then((response)=>{
@@ -92,7 +90,9 @@ const userName= event.target.value || "testowynieistniejacyuzytkownik"
 
   return(
     <div id="mainConteiner" >
-      <Header setIsRegistered={setIsRegister} logOut = {setIsLogged} currentColor={color}  colorFunction={changeColor}/>
+      <Header setIsRegistered={setIsRegister} 
+      isRegistered={isRegistered} myAppUrl={myAppUrl}  user={user} isLogged={isLogged}
+      logOut = {setIsLogged} currentColor={color}  colorFunction={changeColor}/>
       {isLogged ? (<Account 
       myAppUrl={myAppUrl} 
       currentColor={color} 
