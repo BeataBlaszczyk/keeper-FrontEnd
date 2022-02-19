@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { Oval } from  'react-loader-spinner'
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
@@ -15,12 +17,13 @@ var currentUser = document.cookie.split('; ').find(row => row.startsWith('user')
 
 
 
-const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" //npm
+const myAppUrl = "http://localhost:3001" //"https://keeper-back-end.vercel.app" //
 
-function App() {
+ function  App() {
+ 
+ useEffect(()=> {
 
-  useEffect(()=> {
-    
+  setIsLoaded(false)
     if (currentUser){
      
       console.log("rerender whole app" + currentUser)
@@ -36,11 +39,14 @@ function App() {
         setColor(response.data.color)
         }
         setIsLogged(true)
+        setIsLoaded(true)
       });
 
-  }}, [])
+  }
+  
+}, [])
 
-
+const [isLoaded, setIsLoaded] = useState(false)
   const [isRegistered, setIsRegister] = useState(true)
   const [color, setColor]= useState("#f5ba13");
   const [isLogged, setIsLogged] = useState(false);
@@ -121,11 +127,13 @@ const userName= event.target.value || "testowynieistniejacyuzytkownik"
   }
 
   return(
+    <React.Fragment> 
+    { (isLoaded) ?  (
     <div id="mainConteiner" >
       <Header setIsRegistered={setIsRegister} 
       isRegistered={isRegistered} myAppUrl={myAppUrl}  user={user} isLogged={isLogged}
       logOut = {setIsLogged} currentColor={color}  colorFunction={changeColor}/>
-      {isLogged ? (<Account 
+      {(isLogged) ? (<Account 
       myAppUrl={myAppUrl} 
       currentColor={color} 
       user={user} 
@@ -141,7 +149,14 @@ const userName= event.target.value || "testowynieistniejacyuzytkownik"
       currentColor={color} 
       user={user} 
       setUser={setUser} 
-      loginFunc={handleClick}/>) }</div>
+      loginFunc={handleClick}/>) }</div>) 
+      : (<Oval 
+      height="200"
+    width="200"
+    color='DimGray'
+    ariaLabel='loading' />)
+    }
+      </React.Fragment>
     
   )
 

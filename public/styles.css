@@ -268,6 +268,15 @@ input:focus {
   color: red;
 }
 
+circle{
+  stroke:Grey!important;
+}
+
+svg[aria-label="loading"] {
+  margin: auto;
+  margin-top: 180px;
+}
+
 button:disabled,
 button[disabled=disabled] {
   cursor: not-allowed !important;
