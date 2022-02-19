@@ -7,11 +7,40 @@ import CreateArea from "./CreateArea";
 import Axios from "axios";
 import LoginForm from "./LoginForm";
 import Account from "./Account";
+
+
+var currentUser = document.cookie.split('; ').find(row => row.startsWith('user'))?.split('=')[1];
 //import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 
-const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" //;
+
+
+
+const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" //npm
 
 function App() {
+
+  useEffect(()=> {
+    
+    if (currentUser){
+     
+      console.log("rerender whole app" + currentUser)
+      Axios.post(myAppUrl+"/login", {username: currentUser, password: ""}).then((response)=>{
+        console.log(response.data + "RESPONSE")
+       if (typeof(response.data)=== 'string'){
+          setLoginMsg(response.data)
+        }else{
+       // setUserID(response.data.id)
+       setUser(response.data) 
+       
+        
+        setColor(response.data.color)
+        }
+        setIsLogged(true)
+      });
+
+  }}, [])
+
+
   const [isRegistered, setIsRegister] = useState(true)
   const [color, setColor]= useState("#f5ba13");
   const [isLogged, setIsLogged] = useState(false);
@@ -24,6 +53,9 @@ const [loginMsg, setLoginMsg] = useState("")
     color: color,
     _id: ""
 });
+
+
+
 
   function changeColor(event){
     event ? setColor(event.target.value) : setColor(color);

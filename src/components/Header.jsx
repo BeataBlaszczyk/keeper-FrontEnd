@@ -37,7 +37,9 @@ function Header(props) {
 
       </input>
       <label  htmlFor="colorChoose"> <BorderColorIcon style={{color:"white" }} /> </label>
-      <LogoutIcon  style={{color:"white", marginLeft:"20px", cursor:"pointer" }} onClick={()=> {props.logOut(false)
+      <LogoutIcon  style={{color:"white", marginLeft:"20px", cursor:"pointer" }} onClick={()=> {
+        document.cookie = "user="+"";
+        props.logOut(false)
       props.setIsRegistered(true)}}/>
       </div>
     </header>

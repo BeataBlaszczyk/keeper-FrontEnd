@@ -14,8 +14,10 @@ function Account(props) {
   const myAppUrl = props.myAppUrl;
 
   useEffect(() => {
+    console.log("ID" + props.user.username)
+
     Axios.get(myAppUrl+"/getNotes"+ props.user._id).then((response) => {
-      
+      document.cookie = "user="+props.user.username;
       setNotes(response.data)
       
     })
