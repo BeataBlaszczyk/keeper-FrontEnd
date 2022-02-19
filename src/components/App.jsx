@@ -39,11 +39,11 @@ const myAppUrl = "https://keeper-back-end.vercel.app" //"http://localhost:3001" 
         setColor(response.data.color)
         }
         setIsLogged(true)
-        setIsLoaded(true)
+        
       });
 
   }
-  
+  setIsLoaded(true)
 }, [])
 
 const [isLoaded, setIsLoaded] = useState(false)
