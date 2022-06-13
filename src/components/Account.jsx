@@ -18,7 +18,7 @@ function Account(props) {
 
     Axios.get(myAppUrl+"/getNotes"+ props.user._id).then((response) => {
       document.cookie = "user="+props.user.username;
-      setNotes(response.data)
+      setNotes(response.data.reverse())
       
     })
     
@@ -29,7 +29,7 @@ function Account(props) {
     Axios.post(myAppUrl+ "/createNote", {title: newNote.title, content: newNote.content, userID: props.user._id}).then((response)=>{
     
       Axios.get(myAppUrl+"/getNotes"+ props.user._id).then((response) => {
-        setNotes(response.data)});
+        setNotes(response.data.reverse())});
   });
       
   }
